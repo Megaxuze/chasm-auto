@@ -49,18 +49,14 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 sleep 2
 
 mkdir -p ~/chasm
-cd ~/chasm
-
-sleep 2
-
 cat > .env <<EOF
-PORT=3001
+PORT=3002 # Mengganti port ke 3002 agar tidak bentrok dengan scout1
 LOGGER_LEVEL=debug
 ORCHESTRATOR_URL=https://orchestrator.chasm.net
 SCOUT_NAME=$SCOUTNAME
 SCOUT_UID=$SCOUTUID
 WEBHOOK_API_KEY=$WEBHOOKAPI
-WEBHOOK_URL=http://$(hostname -I | awk '{print $1}'):3001/
+WEBHOOK_URL=http://$(hostname -I | awk '{print $1}'):3002/
 PROVIDERS=groq
 MODEL=gemma2-9b-it
 GROQ_API_KEY=$GROQAPI
@@ -71,7 +67,7 @@ EOF
 sleep 2
 
 docker pull chasmtech/chasm-scout:latest
-docker run -d --restart=always --env-file ./.env -p 3001:3001 --name scout2 chasmtech/chasm-scout
+docker run -d --restart=always --env-file ./.env -p 3002:3002 --name scout2 chasmtech/chasm-scout
 
 sleep 2
 
